@@ -3,7 +3,7 @@ import { WebsiteSpecificationForm } from "@/components/website-specification-for
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center min-h-screen p-4 sm:p-8 font-[family-name:var(--font-geist-sans)] bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-50">
+    <div className="flex flex-col items-center min-h-screen p-4 sm:p-8 font-sans bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-50">
       <header className="w-full max-w-3xl text-center mb-12 p-6 bg-gradient-to-r from-green-600 to-emerald-700 text-white rounded-lg shadow-lg">
         <h1 className="text-4xl font-extrabold mb-4">
           FAS0-BARA INTELLIGENCE
