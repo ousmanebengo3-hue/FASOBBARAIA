@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { WebsiteSpecificationFormValues, websiteSpecificationSchema } from "@/lib/schemas";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { formatToWhatsAppMessage } from "@/lib/utils"; // Import the new utility
 
 const projectTypes = [
   { id: "showcase", label: "Site Vitrine" },
@@ -35,6 +36,8 @@ const contentElements = [
   { id: "testimonials", label: "Témoignages clients" },
   { id: "blog", label: "Section Blog (simple)" },
 ] as const;
+
+const WHATSAPP_NUMBER = "22656888879";
 
 export function WebsiteSpecificationForm() {
   const form = useForm<WebsiteSpecificationFormValues>({
@@ -58,11 +61,16 @@ export function WebsiteSpecificationForm() {
   });
 
   async function onSubmit(data: WebsiteSpecificationFormValues) {
-    // In a real application, you would send this data to a backend API.
-    // For this example, we'll just log it and show a toast.
-    console.log(data);
-    toast.success("Vos spécifications ont été soumises avec succès ! Nous vous contacterons bientôt.");
-    form.reset(); // Reset the form after successful submission
+    const whatsappMessage = formatToWhatsAppMessage(data);
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`;
+
+    // Open WhatsApp link
+    window.open(whatsappUrl, "_blank");
+
+    toast.success("Redirection vers WhatsApp... Veuillez envoyer le message pré-rempli.");
+    
+    // We don't reset the form immediately, as the user might need to return if WhatsApp fails to open.
+    // form.reset(); 
   }
 
   const hasDomain = form.watch("hasDomain");
