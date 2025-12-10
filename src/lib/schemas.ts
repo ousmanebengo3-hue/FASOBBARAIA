@@ -11,6 +11,7 @@ export const websiteSpecificationSchema = z.object({
   contentElements: z.array(z.string()).min(1, "Veuillez sélectionner au moins un élément de contenu."),
   designPreferences: z.string().optional(),
   pagesNeeded: z.string().optional(),
+  // Ces champs sont définis avec .default(false), ils doivent donc être de type boolean dans l'inférence.
   hasDomain: z.boolean().default(false),
   domainName: z.string().optional(),
   needsHosting: z.boolean().default(false),
