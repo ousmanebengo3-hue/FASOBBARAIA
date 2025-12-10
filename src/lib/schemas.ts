@@ -12,18 +12,18 @@ export const websiteSpecificationSchema = z.object({
   designPreferences: z.string().optional(),
   pagesNeeded: z.string().optional(),
   hasDomain: z.boolean().default(false),
-  domainName: z.string().optional().refine((val, ctx) => {
-    const { hasDomain } = ctx.parent as { hasDomain: boolean };
-    if (hasDomain && !val) {
-      return ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Veuillez spécifier votre nom de domaine existant.",
-      });
-    }
-    return true;
-  }, "Veuillez spécifier votre nom de domaine existant."),
+  domainName: z.string().optional(),
   needsHosting: z.boolean().default(false),
   needsAnalytics: z.boolean().default(false),
+}).superRefine((data, ctx) => {
+  // Validation croisée: Si hasDomain est vrai, domainName doit être spécifié.
+  if (data.hasDomain && !data.domainName) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ['domainName'],
+      message: "Veuillez spécifier votre nom de domaine existant.",
+    });
+  }
 });
 
 export type WebsiteSpecificationFormValues = z.infer<typeof websiteSpecificationSchema>;
