@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const websiteSpecificationSchema = z.object({
   clientName: z.string().min(1, "Le nom du client est requis."),
-  clientEmail: z.string().email("Adresse e-mail invalide."),
+  clientEmail: z.string().email("Adresse e-mail invalide.").optional().or(z.literal("")), // Permet une chaîne vide ou undefined
   clientPhone: z.string().min(1, "Le numéro de téléphone est requis (WhatsApp préféré)."),
   companyName: z.string().optional(),
   projectType: z.array(z.string()).min(1, "Veuillez sélectionner au moins un type de projet."),
