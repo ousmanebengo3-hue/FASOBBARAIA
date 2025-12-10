@@ -40,8 +40,6 @@ const contentElements = [
 
 const WHATSAPP_NUMBER = "22656888879";
 
-// Définissons le type d'entrée du formulaire en utilisant le type de sortie Zod (WebsiteSpecificationFormValues),
-// car les champs avec .default(false) sont requis dans la sortie et dans les defaultValues de RHF.
 type FormInput = WebsiteSpecificationFormValues;
 
 
@@ -59,7 +57,7 @@ export function WebsiteSpecificationForm() {
       contentElements: [],
       designPreferences: "",
       pagesNeeded: "",
-      // Les champs booléens avec .default(false) sont requis dans FormInput (WebsiteSpecificationFormValues)
+      // Les champs booléens sont requis et initialisés à false
       hasDomain: false, 
       domainName: "",
       needsHosting: false,
