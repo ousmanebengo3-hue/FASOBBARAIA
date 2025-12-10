@@ -15,7 +15,9 @@ export function formatToWhatsAppMessage(data: WebsiteSpecificationFormValues): s
   // Coordonnées
   message += "--- VOS COORDONNÉES ---\n";
   message += `Nom: ${data.clientName}\n`;
-  message += `Email: ${data.clientEmail}\n`;
+  if (data.clientEmail) { // Check if email exists before adding
+    message += `Email: ${data.clientEmail}\n`;
+  }
   message += `Téléphone (WhatsApp): ${data.clientPhone}\n`;
   if (data.companyName) {
     message += `Entreprise: ${data.companyName}\n`;
