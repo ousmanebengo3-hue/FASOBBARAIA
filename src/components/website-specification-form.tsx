@@ -39,8 +39,14 @@ const contentElements = [
 
 const WHATSAPP_NUMBER = "22656888879";
 
+// Définir un type local pour les valeurs par défaut qui inclut tous les champs
+// comme requis, car useForm nécessite des valeurs initiales pour tous les champs.
+// Nous utilisons Partial<WebsiteSpecificationFormValues> pour la généricité de useForm,
+// mais nous nous assurons que les defaultValues sont complets.
+type FormInput = Required<WebsiteSpecificationFormValues>;
+
 export function WebsiteSpecificationForm() {
-  const form = useForm<WebsiteSpecificationFormValues>({
+  const form = useForm<FormInput>({
     resolver: zodResolver(websiteSpecificationSchema),
     defaultValues: {
       clientName: "",
@@ -60,7 +66,7 @@ export function WebsiteSpecificationForm() {
     },
   });
 
-  async function onSubmit(data: WebsiteSpecificationFormValues) {
+  async function onSubmit(data: FormInput) {
     const whatsappMessage = formatToWhatsAppMessage(data);
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`;
 
