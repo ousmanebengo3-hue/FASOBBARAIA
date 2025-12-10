@@ -11,11 +11,11 @@ export const websiteSpecificationSchema = z.object({
   contentElements: z.array(z.string()).min(1, "Veuillez sélectionner au moins un élément de contenu."),
   designPreferences: z.string().optional(),
   pagesNeeded: z.string().optional(),
-  // Ces champs sont définis avec .default(false), ils doivent donc être de type boolean dans l'inférence.
-  hasDomain: z.boolean().default(false),
+  // Changement: Rendre ces champs requis (non-optionnels) dans le schéma
+  hasDomain: z.boolean(),
   domainName: z.string().optional(),
-  needsHosting: z.boolean().default(false),
-  needsAnalytics: z.boolean().default(false),
+  needsHosting: z.boolean(),
+  needsAnalytics: z.boolean(),
 }).superRefine((data, ctx) => {
   // Validation croisée: Si hasDomain est vrai, domainName doit être spécifié.
   if (data.hasDomain && !data.domainName) {

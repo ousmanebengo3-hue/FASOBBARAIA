@@ -18,8 +18,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { WebsiteSpecificationFormValues, websiteSpecificationSchema } from "@/lib/schemas";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { formatToWhatsAppMessage } from "@/lib/utils"; // Import the new utility
-import { z } from "zod"; // Import Zod to access input type
+import { formatToWhatsAppMessage } from "@/lib/utils";
+import { z } from "zod";
 
 const projectTypes = [
   { id: "showcase", label: "Site Vitrine" },
@@ -40,40 +40,34 @@ const contentElements = [
 
 const WHATSAPP_NUMBER = "22656888879";
 
-// Utiliser le type d'entrée du schéma Zod (avant l'application des .default())
-// et s'assurer que les champs optionnels qui reçoivent une valeur par défaut
-// dans useForm sont traités comme des chaînes/booléens non-optionnels pour RHF.
-// Nous allons utiliser le type de sortie (WebsiteSpecificationFormValues) pour la soumission,
-// mais nous devons ajuster le type d'entrée pour RHF.
-
-// Définissons le type d'entrée du formulaire comme le type de sortie de Zod,
-// car les champs avec .default(false) sont requis dans la sortie.
-type FormInput = z.infer<typeof websiteSpecificationSchema>;
+// Définissons le type d'entrée du formulaire en utilisant le type de sortie Zod (WebsiteSpecificationFormValues),
+// car les champs avec .default(false) sont requis dans la sortie et dans les defaultValues de RHF.
+type FormInput = WebsiteSpecificationFormValues;
 
 
 export function WebsiteSpecificationForm() {
   const form = useForm<FormInput>({
-    resolver: zodResolver(websiteSpecificationSchema), // Retrait du 'as any'
+    resolver: zodResolver(websiteSpecificationSchema),
     defaultValues: {
       clientName: "",
-      clientEmail: "", // Optional in schema, initialized to ""
+      clientEmail: "",
       clientPhone: "",
-      companyName: "", // Optional in schema, initialized to ""
+      companyName: "",
       projectType: [],
       websitePurpose: "",
-      targetAudience: "", // Optional in schema, initialized to ""
+      targetAudience: "",
       contentElements: [],
-      designPreferences: "", // Optional in schema, initialized to ""
-      pagesNeeded: "", // Optional in schema, initialized to ""
-      hasDomain: false, // Defaulted in schema, initialized to false
-      domainName: "", // Optional in schema, initialized to ""
-      needsHosting: false, // Defaulted in schema, initialized to false
-      needsAnalytics: false, // Defaulted in schema, initialized to false
+      designPreferences: "",
+      pagesNeeded: "",
+      // Les champs booléens avec .default(false) sont requis dans FormInput (WebsiteSpecificationFormValues)
+      hasDomain: false, 
+      domainName: "",
+      needsHosting: false,
+      needsAnalytics: false,
     },
   });
 
   async function onSubmit(data: FormInput) {
-    // data est de type FormInput (WebsiteSpecificationFormValues), qui est le type de sortie Zod.
     const whatsappMessage = formatToWhatsAppMessage(data);
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`;
 
