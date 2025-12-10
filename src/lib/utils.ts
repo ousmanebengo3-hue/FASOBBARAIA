@@ -15,7 +15,7 @@ export function formatToWhatsAppMessage(data: WebsiteSpecificationFormValues): s
   // Coordonnées
   message += "--- VOS COORDONNÉES ---\n";
   message += `Nom: ${data.clientName}\n`;
-  if (data.clientEmail) { // Check if email exists before adding
+  if (data.clientEmail) {
     message += `Email: ${data.clientEmail}\n`;
   }
   message += `Téléphone (WhatsApp): ${data.clientPhone}\n`;
@@ -53,5 +53,9 @@ export function formatToWhatsAppMessage(data: WebsiteSpecificationFormValues): s
   message += `Besoin d'hébergement gratuit (.BF): ${data.needsHosting ? "Oui" : "Non"}\n`;
   message += `Besoin d'analytique: ${data.needsAnalytics ? "Oui" : "Non"}\n`;
 
-  return encodeURIComponent(message);
+  // Remplacer les sauts de ligne par l'encodage spécifique de WhatsApp (%0A)
+  // et s'assurer que tout le reste est encodé.
+  const encodedMessage = encodeURIComponent(message);
+  
+  return encodedMessage;
 }
