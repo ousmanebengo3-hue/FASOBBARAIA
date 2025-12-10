@@ -6,19 +6,22 @@ import { Button } from "@/components/ui/button";
 const features = [
   {
     icon: Globe,
-    title: "Hébergement Gratuit (1 An)",
+    title: "Hébergement Gratuit",
+    subtitle: "(1 An et prolongeable gratuitement)",
     description: "Offert pour tous les sites avec noms de domaines en .BF.",
     highlight: true,
   },
   {
     icon: Shield,
     title: "Tableau Analytique Inclus",
+    subtitle: undefined,
     description: "Surveillance des visiteurs, des performances et de la sécurité du site web.",
     highlight: false,
   },
   {
     icon: Zap,
     title: "Prix Compétitifs",
+    subtitle: undefined,
     description: "Conception de sites web à partir de 10 000 FCFA.",
     highlight: false,
   },
@@ -46,7 +49,14 @@ export function HeroSection() {
           >
             <CardContent className="flex flex-col items-center p-4 pt-6">
               <feature.icon className={`w-8 h-8 mb-3 ${feature.highlight ? "text-primary" : "text-accent-foreground"}`} />
-              <h3 className="text-lg font-bold mb-1">{feature.title}</h3>
+              <h3 className="text-lg font-bold mb-1 leading-tight">
+                {feature.title}
+                {feature.subtitle && (
+                  <span className="block text-base font-semibold text-primary/90 mt-0.5">
+                    {feature.subtitle}
+                  </span>
+                )}
+              </h3>
               <p className="text-sm text-muted-foreground">{feature.description}</p>
             </CardContent>
           </Card>
